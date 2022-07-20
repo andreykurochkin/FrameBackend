@@ -1,21 +1,16 @@
-﻿using FluentAssertions;
-using Frame.Contracts.V1.Requests;
+﻿using Frame.Contracts.V1.Requests;
 using Frame.Domain;
 using Frame.Infrastructure.Options;
-using Frame.Infrastructure.Providers;
 using Frame.Infrastructure.Providers.Base;
 using Frame.UnitTests.Helpers;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Frame.UnitTests.Fixtures;
 public class TokenSpecificFixture

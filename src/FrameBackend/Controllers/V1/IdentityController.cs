@@ -80,7 +80,7 @@ public class IdentityController : ControllerBase
         {
             var output = new AuthFailedUISpecificResponse
             {
-                ModelFieldErrors = authResponse.ModelFieldErrors!.ToList()
+                ModelFieldErrors = authResponse.ModelFieldErrors?.ToList() ?? Enumerable.Empty<ModelFieldError>()
             };
             return BadRequest(output.ModelFieldErrors.Select(_ => $"FieldName: {_.FieldName} Error: {_.Error}").ToList());
         }

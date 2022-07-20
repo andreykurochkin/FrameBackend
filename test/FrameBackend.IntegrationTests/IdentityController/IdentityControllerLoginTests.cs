@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -11,7 +12,7 @@ public class IdentityControllerLoginTests : IClassFixture<WebApplicationFactory<
 
     public IdentityControllerLoginTests(WebApplicationFactory<Program> fixture)
     {
-        //_fixture = fixture;
+        _fixture = fixture;
     }
     
     [Fact]

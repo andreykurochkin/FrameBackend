@@ -1,11 +1,8 @@
 ﻿using FluentAssertions;
-using Frame.Domain;
 using Frame.Infrastructure.Options;
 using Frame.Infrastructure.Providers;
 using Frame.Infrastructure.Providers.Base;
 using Frame.UnitTests.Helpers;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Moq;
 using System;
@@ -25,7 +22,7 @@ public class DefaultSecurityTokenProviderTests
     private readonly ITestOutputHelper _testOutputHelper;
     private readonly IGuidProvider _guidProvider = new MongoGuidProvider();
 
-    public DefaultSecurityTokenProviderTests(ITestOutputHelper testOutputHelper, IGuidProvider guidProvider)
+    public DefaultSecurityTokenProviderTests(ITestOutputHelper testOutputHelper/*, IGuidProvider guidProvider*/)
     {
         _jwtOptions = new JwtOptions
         {
@@ -34,7 +31,7 @@ public class DefaultSecurityTokenProviderTests
         };
         _sut = new DefaultSecurityTokenProvider(_jwtOptions, _dateTimeProvider, _guidProvider);
         _testOutputHelper = testOutputHelper;
-        _guidProvider = guidProvider;
+        //_guidProvider = guidProvider;
     }
 
     [Fact]
@@ -65,7 +62,6 @@ public class DefaultSecurityTokenProviderTests
         func.Should().Throw<ArgumentNullException>();
     }
 
-    // TODO refactor - test is obscure
     [Fact]
     public void GetAccessToken_ShouldThrow_WhenTokenExpIsBeforeDateTimeUtcNow()
     {
@@ -96,22 +92,6 @@ public class DefaultSecurityTokenProviderTests
 
 
         var func = () => new JwtSecurityTokenHandler().CreateToken(tokenDescriptor);
-        func.Should().NotThrow<ArgumentException>();
-    }
-
-    // TODO refactor - test is obscure
-    [Fact]
-    public void AlterGetAccessToken_ShouldThrow_WhenTokenExpIsBeforeDateTimeUtcNow()
-    {
-        var cashedDateTimeMinus10Minutes = DateTime.UtcNow.AddSeconds(-600);
-        var mockTokenExpirationDateTimeProvider = new Mock<IDateTimeProvider>();
-        mockTokenExpirationDateTimeProvider.Setup(dateTimeProvider => dateTimeProvider.GetDateTime())
-            .Returns(cashedDateTimeMinus10Minutes);
-        _sut = new DefaultSecurityTokenProvider(_jwtOptions, mockTokenExpirationDateTimeProvider.Object, _guidProvider);
-
-        var identityUser = IdentityUserHelper.GetOne();
-
-        _sut = new DefaultSecurityTokenProvider(_jwtOptions, mockTokenExpirationDateTimeProvider.Object, _guidProvider);
-        var t = _sut.GetSecurityToken(identityUser);
+        func.Should().Throw<ArgumentException>();
     }
 }
