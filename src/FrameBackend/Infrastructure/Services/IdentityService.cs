@@ -163,6 +163,7 @@ public class IdentityService : IIdentityService
         await _refreshTokenRepository.ReplaceOneAsync(storedRefreshToken);
 
         var user = await _identityUserRepository.FindByIdAsync(userIdFromClaimsPrincipal.Value);
+        ArgumentNullException.ThrowIfNull(user);
         return await GenerateAuthenticationResultForUserAsync(user);
     }
 

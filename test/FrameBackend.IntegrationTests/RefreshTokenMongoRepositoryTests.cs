@@ -14,13 +14,14 @@ namespace Frame.IntegrationTests;
 
 public class RefreshTokenMongoRepositoryTests : IClassFixture<MongoDbFixture>
 {
-    private readonly MongoDbFixture _fixture;
-    private readonly RefreshTokenMongoRepository _sut;
-    private readonly RefreshToken _refreshToken;
-    private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly IGuidProvider _guidProvider;
-    private readonly IRefreshTokenProvider _refreshTokenProvider;
-    private readonly ISecurityTokenProvider _securityTokenProvider;
+    // todo implement that test using WebApplicationFactory 
+    //private readonly MongoDbFixture _fixture;
+    //private readonly RefreshTokenMongoRepository _sut;
+    //private readonly RefreshToken _refreshToken;
+    //private readonly IDateTimeProvider _dateTimeProvider;
+    //private readonly IGuidProvider _guidProvider;
+    //private readonly IRefreshTokenProvider _refreshTokenProvider;
+    //private readonly ISecurityTokenProvider _securityTokenProvider;
     public RefreshTokenMongoRepositoryTests(MongoDbFixture fixture)
     {
         //_fixture = fixture;

@@ -33,5 +33,9 @@ public class IdentityUserMongoRepository : IIdentityUserRepository
         .Find(_ => true)
         .ToListAsync();
 
-    public async Task CreateAsync(IdentityUser? identityUser) => await _identityUsers.InsertOneAsync(identityUser);
+    public async Task CreateAsync(IdentityUser? identityUser)
+    {
+        ArgumentNullException.ThrowIfNull(identityUser);
+        await _identityUsers.InsertOneAsync(identityUser);
+    }
 }
