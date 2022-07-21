@@ -23,7 +23,7 @@ public class IdentityControllerLoginTests : IClassFixture<WebApplicationFactory<
     }
     
     [Fact]
-    public async Task LoginShould_ReturnOkResponse_WhenUserIsNotFoundInPersistent()
+    public async Task LoginShould_ReturnBadRequest_WhenUserIsNotFoundInPersistent()
     {
         UserLoginRequest userLoginRequest = new UserLoginRequest
         {
