@@ -2,10 +2,8 @@
 using Frame.Contracts.V1;
 using Frame.Contracts.V1.Requests;
 using Frame.UnitTests.Fixtures;
-using Microsoft.AspNetCore.Mvc;
+using FrameBackend.IntegrationTests.Helpers;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,19 +24,17 @@ public class IdentityControllerLoginTests : IClassFixture<WebApplicationFactory<
     [Fact]
     public async Task LoginShould_ReturnBadRequest_WhenUserIsNotFoundInPersistent()
     {
-        UserLoginRequest userLoginRequest = new UserLoginRequest
-        {
-            Email = TokenSpecificFixture.Email,
-            Password = TokenSpecificFixture.Password,
-        };
-        var json = System.Text.Json.JsonSerializer.Serialize(userLoginRequest);
-        HttpContent httpContent = new StringContent(json, encoding: System.Text.Encoding.UTF8, mediaType: "application/json");
-
-        var httpRequestMessage = new HttpRequestMessage(method: HttpMethod.Post, ApiRoutes.Identity.Login);
-        httpRequestMessage.Content = httpContent;
+        HttpContent httpContent = CreateHttpContentWhenUserNotFound();
 
         var response = await _httpClient.PostAsync(ApiRoutes.Identity.Login, httpContent);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
+    private static HttpContent CreateHttpContentWhenUserNotFound()
+    {
+        var json = System.Text.Json.JsonSerializer.Serialize(UserLoginRequests.UserNotFound);
+        HttpContent httpContent = new StringContent(json, encoding: System.Text.Encoding.UTF8, mediaType: "application/json");
+        return httpContent;
     }
 }
