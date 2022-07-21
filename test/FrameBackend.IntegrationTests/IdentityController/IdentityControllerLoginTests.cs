@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestPlatform.TestHost;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
@@ -33,14 +34,11 @@ public class IdentityControllerLoginTests : IClassFixture<WebApplicationFactory<
         var json = System.Text.Json.JsonSerializer.Serialize(userLoginRequest);
         HttpContent httpContent = new StringContent(json, encoding: System.Text.Encoding.UTF8, mediaType: "application/json");
 
-
-        //var path = "/api/v1/identity/login";
         var httpRequestMessage = new HttpRequestMessage(method: HttpMethod.Post, ApiRoutes.Identity.Login);
         httpRequestMessage.Content = httpContent;
 
-        //var response = await _httpClient.SendAsync(httpRequestMessage);
         var response = await _httpClient.PostAsync(ApiRoutes.Identity.Login, httpContent);
 
-        response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 }
